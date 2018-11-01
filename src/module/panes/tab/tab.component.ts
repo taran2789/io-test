@@ -388,6 +388,7 @@ description : If "true" add two context menus i.e close All and close Others tab
     let flag = false;
     if (typeof input === 'string') {
       this.tabCollection.forEach((tabs) => {
+        tabs.tabPillClass = '';
         if (input.trim().toLowerCase() === tabs.title.trim().toLowerCase()) {
           tabs.active = true;
           flag = true;
@@ -398,11 +399,13 @@ description : If "true" add two context menus i.e close All and close Others tab
       });
     } else if (typeof input === 'number') {
       this.tabCollection.forEach((tabs: any, index: number) => {
+        tabs.tabPillClass = '';
         if (index + 1 === input) {
           tabs.active = true;
           flag = true;
         } else {
           tabs.active = false;
+
         }
         this.asignTabPillClass(tabs);
       });
