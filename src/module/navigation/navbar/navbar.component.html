@@ -1,0 +1,28 @@
+
+<nav #navbar class="topnav" [ngClass]="{'topnav-mobile':mobilemode}" (window:resize)="resize($event)">
+    <div #navbarfixed class="topnavbarunit1" [ngClass]="{'topnavbarunit1-mobile':mobilemode}" >
+        <div class="float-left"  [ngStyle]="{'padding-left':sidenav ? '40px':'0px'}">
+            <img alt="title" style="cursor: pointer" (click)="onNavLogoClick.emit($event)"  (load)="onImageLoad()" *ngIf="logo" [attr.src]="logo" class="navbar-logo">
+            <amexio-label (onClick)="onNavTitleClick.emit($event)" [enable-click]="true"  size="medium-bold">{{title}}</amexio-label>
+        </div>
+        <div *ngIf="mobilemode" class="float-right mobilebar" (click)="toggleDrawerPanel($event)">
+            <em *ngIf="!toggle"  class="fa fa-caret-down fa-2x"></em>
+            <em *ngIf="toggle"  class="fa fa-caret-up fa-2x"></em>
+        </div>
+    </div>
+    <div #navbaritems *ngIf="toggle" class="topnavbarunit2"  [ngClass]="{'topnavbarunit2-mobile':mobilemode}" >
+        <div class="topnavmainbar"    [ngClass]="{'topnavmainbar-mobile':mobilemode}" >
+            <div #navbaritems1 class="topnavmainbaritems" [ngClass]="{'topnavmainbaritems-mobile':mobilemode}" >
+                <ng-content select="[position-left]"></ng-content>
+            </div>
+            <div #navbaritems2 class="topnavmainbaritems"  [ngClass]="{'topnavmainbaritems-mobile':mobilemode}" >
+                <ng-content select="[position-center]"></ng-content>
+            </div>
+            <div #navbaritems3 class="topnavmainbaritems"   [ngClass]="{'topnavmainbaritems-mobile':mobilemode}" >
+              <ng-content select="[position-right]"></ng-content>
+            </div>
+
+          </div>
+    </div>
+
+  </nav>

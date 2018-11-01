@@ -1,0 +1,10 @@
+<ng-container *ngIf="data?.length > 0; else elseBlock">
+  <ng-container *ngFor="let item of data">
+      <amexio-chip [icon]="item.icon" [label]="item.label" [badge]="item.badge" [closable]="item.closable" [color]="item.color"
+          (closeClick)="onCloseChipsClick($event)" (labelClick)="emitSelectedLabel($event) ">
+      </amexio-chip>
+  </ng-container>
+</ng-container>
+<ng-template #elseBlock>
+      <ng-content></ng-content>
+</ng-template>

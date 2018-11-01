@@ -1,0 +1,44 @@
+
+.label-content{
+}
+.label-badge{
+  margin-left: 10px;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border-radius: 10px;
+}
+
+.large{
+  font-size: $largeFontSize;
+  line-height: 34px;
+}
+.medium{
+  font-size: $mediumFontSize;
+}
+
+.small{
+  font-size: $smallFontSize;
+}
+
+.large-bold{
+  font-size: $largeFontSize;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.medium-bold{
+  font-size: $mediumFontSize;
+  font-weight: bold;
+}
+
+.small-bold{
+  font-size: $smallFontSize;
+  font-weight: bold;
+}
