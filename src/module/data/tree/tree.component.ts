@@ -37,7 +37,6 @@ description : Local Data binding.
     }
   }
   get data(): any[] {
-    console.log('tree get data');
     return this._data;
   }
 
@@ -230,7 +229,6 @@ description : Context Menu provides the list of menus on right click.
 
   ngAfterViewInit() {
     setTimeout(() => {
-      console.log('tree ngAfterViewInit setTimeout ')
       if (this.parentTmp != null) {
         this.templates = { treeNodeTemplate: this.parentTmp };
       } else if (this.templates != null) {

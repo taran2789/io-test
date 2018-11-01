@@ -6,8 +6,8 @@ different configurable attributes for validation (min/max length, allow
 blank, custom regex), custom error message, help, custom styles.
 */
 import {
-  ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild,
-  ViewEncapsulation,
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output,
+  ViewChild, ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -269,7 +269,7 @@ description : On field value change event
 */
   @Output() change: any = new EventEmitter<any>();
 
-  constructor() {
+  constructor(private _cdr: ChangeDetectorRef) {
     this.showToolTip = false;
   }
 
@@ -316,6 +316,7 @@ description : On field value change event
   writeValue(value: any) {
     if (value !== this.innerValue) {
       this.innerValue = value;
+      this._cdr.detectChanges();
     }
   }
 

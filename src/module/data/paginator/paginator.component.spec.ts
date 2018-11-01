@@ -137,15 +137,11 @@ describe('amexio-paginator', () => {
     comp.currentRowIndex = 2;
     comp.pageIndex = [1, 2, 3];
     comp.onNext();
-
-
-    // console.log('activepagessss=='+comp.activePages.length);3
-    // console.log('active index pages' +comp.activePageIndex);2
     expect(comp.activePages.length).toEqual(3);
     expect(comp.activePageIndex).toEqual(1);
 
     comp.onNext();
-   
+
     expect(comp.activePage).toBeUndefined;
     expect(comp.activePageIndex).toBeUndefined;
     expect(comp.fullPageSet.length).toBeGreaterThan(0);

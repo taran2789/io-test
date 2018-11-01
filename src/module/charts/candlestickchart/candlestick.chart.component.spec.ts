@@ -124,7 +124,7 @@ describe('CANDLESTICK CHART', () => {
         candlestickchartcomp.chartTileTextStyle();
         candlestickchartcomp.backgroundcolor;
         candlestickchartcomp.chartVerticalStyle();
-        
+
 
     });
     it('chartTitleTextStyle()', () => {
@@ -135,7 +135,6 @@ describe('CANDLESTICK CHART', () => {
         candlestickchartcomp.chartTitleComponent.bold = true;
         candlestickchartcomp.chartTitleComponent.italic = true;
         const charttextstyle = candlestickchartcomp.chartTileTextStyle();
-        // console.log(JSON.stringify(charttextstyle));
     });
     it('chartLegendStyle()', () => {
         candlestickchartcomp.chartAreaComponent.topposition = 5;
@@ -144,16 +143,13 @@ describe('CANDLESTICK CHART', () => {
         candlestickchartcomp.chartAreaComponent.chartbackgroundcolor = 'red';
         candlestickchartcomp.chartAreaComponent.topposition = 6;
         const chartlegendstyle = candlestickchartcomp.chartLegendStyle();
-     
+
         })
         it('chartBackgroundStyle()', () => {
             candlestickchartcomp.chartAreaComponent.chartbackgroundcolor = 'red';
             candlestickchartcomp.chartAreaComponent.chartheight = 50;
             candlestickchartcomp.chartAreaComponent.chartwidth = 100;
             candlestickchartcomp.chartAreaComponent.leftposition = null;
-            //const chartbgstyle =  candlestickchartcomp.chartBackgroundColor();
-            //const json1 = {"backgroundcolor":null,"left":null,"top":null,"height":50,"width":100}
-            //console.log(JSON.stringify(chartbgstyle));
         });
         it('ngOnInit()', () => {
             candlestickchartcomp.ngOnInit();

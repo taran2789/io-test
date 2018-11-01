@@ -25,7 +25,7 @@ describe('PIE CHART', () => {
     let chartareafixture: ComponentFixture<ChartAreaComponent>;
 
     let chartAreaArray2: ChartAreaComponent [];
-    let chartLegendArray2: ChartLegendComponent []; 
+    let chartLegendArray2: ChartLegendComponent [];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -111,7 +111,6 @@ describe('PIE CHART', () => {
         piechartcomp.chartTitleComponent.bold=true;
         piechartcomp.chartTitleComponent.italic=true;
         const charttextstyle= piechartcomp.charttitleTextStyle();
-       // console.log(JSON.stringify(charttextstyle));
     });
     it('chartLegendStyle()',()=>{
         piechartcomp.chartLengendComponent.position='left';
@@ -165,7 +164,7 @@ describe('PIE CHART', () => {
         piechartcomp.onResize(ComponentFixture);
         piechartcomp.drawChart();
       });
-}); 
+});
 
 
 

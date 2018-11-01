@@ -8,8 +8,7 @@
  Component Description : Amexio Box can be easily wrapped around any other component and configure using the different responsive styling.
 
 */
-import {Component, Input, OnInit} from '@angular/core';
-import {IconLoaderService} from '../../services/icon/icon.service';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 
 @Component({
  selector: 'amexio-box',
@@ -53,6 +52,7 @@ import {IconLoaderService} from '../../services/icon/icon.service';
 
  </div>
  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class AmexioBoxComponent implements OnInit {

@@ -331,7 +331,7 @@ export class IconLoaderService {
       this.iconMappings = ICON_MAPS;
     }
   }*/
-  public _iconToUse: string;
+  private _iconToUse: string;
   iconMappings: any[];
   constructor() {
     this.iconMappings = ICON_MAPPING;

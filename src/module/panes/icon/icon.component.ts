@@ -12,7 +12,7 @@ import {IconLoaderService} from '../../services/icon/icon.service';
         <i class="{{customclass}}" aria-hidden="true" (click)="onClick.emit($event)" style="cursor: pointer;"></i>
       </ng-container>
       <ng-container *ngIf="customclass == null">
-        <i class="{{getIconClass()}}" aria-hidden="true" (click)="onClick.emit($event)" style="cursor: pointer;"></i>
+        <i [ngClass]="iconClass" aria-hidden="true" (click)="onClick.emit($event)" style="cursor: pointer;"></i>
       </ng-container>
     </ng-container>
 
@@ -23,7 +23,7 @@ import {IconLoaderService} from '../../services/icon/icon.service';
       </ng-container>
 
       <ng-container *ngIf="customclass == null">
-        <i class="material-icons" (click)="onClick.emit($event)" style="cursor: pointer;">{{getIconClass()}}</i>
+        <i class="material-icons" (click)="onClick.emit($event)" style="cursor: pointer;">{{iconClass}}</i>
       </ng-container>
     </ng-container>
   `,
@@ -37,16 +37,19 @@ export class AmexioIconPaneComponent implements OnInit {
 
   @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
 
+  iconClass: string;
+
   constructor(public iconLoaderService: IconLoaderService) {
 
   }
 
   ngOnInit() {
+    this.iconClass = this.getIconClass();
   }
 
-  getIconClass(): string {
+  private getIconClass(): string {
+    console.log('iconClass');
     if (this.iconLoaderService.iconMappings != null) {
-
       const iconObject = this.iconLoaderService.iconMappings.find((obj: any) => obj.component === this.key);
       if (iconObject != null) {
         return iconObject[this.iconLoaderService.iconToUse.toString()];
