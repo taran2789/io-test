@@ -357,7 +357,6 @@ description : If "true" add two context menus i.e close All and close Others tab
     // Push new tab and select it.
     this.dummyArray.push(tp);
     this.tabCollection.push(tp.instance);
-    debugger;
     this.selectTab(tp.instance);
 
     return dynCmp.instance;
@@ -482,7 +481,6 @@ description : If "true" add two context menus i.e close All and close Others tab
   }
 
   closeTab(tabNode: AmexioTabPillComponent) {
-    debugger;
    // const newTab: AmexioTabPillComponent[] = [];
     let tabHighlightIndex = 0;
 
@@ -518,7 +516,6 @@ description : If "true" add two context menus i.e close All and close Others tab
   }
 
   asignTabPillClass(tabData: AmexioTabPillComponent) {
-    debugger;
     if ((!tabData.amexiocolor || tabData.amexiocolor === '') && tabData.active && (this.tabPosition === 'top')) {
       tabData.tabPillClass = 'activetab';
     }
@@ -660,12 +657,18 @@ description : If "true" add two context menus i.e close All and close Others tab
 
   @HostListener('document:click')
   onWindowClick() {
-    this.contextMenuFlag = false;
+    this.setContextMenuFlag();
   }
 
   @HostListener('document:scroll')
   onscroll() {
-    this.contextMenuFlag = false;
+   this.setContextMenuFlag();
+  }
+
+  setContextMenuFlag() {
+    if(this.contextMenuFlag) {
+      this.contextMenuFlag = false;
+    }
   }
 
 }
