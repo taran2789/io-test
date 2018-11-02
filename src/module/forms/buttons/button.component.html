@@ -1,4 +1,4 @@
-<button class="button" [ngStyle]="{'cursor': disabled ? 'not-allowed':'pointer'}" ng-disabled="disabled ? true: null" [attr.title]="tooltip" 
+<button class="button" [ngStyle]="{'cursor': disabled ? 'not-allowed':'pointer'}" ng-disabled="disabled ? true: null" [attr.title]="tooltip"
 [ngClass]="{'button-default': size=='default'
         || size ==null,
         'button-small': size=='small',
@@ -21,8 +21,8 @@
           </span>
           {{label}}
           <ng-container *ngIf="badge">
-            <span [ngClass]="badgeClass()" >{{badge}}</span> 
+            <span [ngClass]="badgeCssClass" >{{badge}}</span>
          </ng-container>
         </span>
-      
+
 </button>

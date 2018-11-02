@@ -1,13 +1,12 @@
 /**
  * Created by pratik on 21/12/17.
  */
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IconLoaderService} from '../../services/icon/icon.service';
 
 @Component({
   selector: 'amexio-pane-icon', template: `
     <ng-container *ngIf="iconLoaderService.iconToUse == 'fa'">
-
       <ng-container *ngIf="customclass != null">
         <i class="{{customclass}}" aria-hidden="true" (click)="onClick.emit($event)" style="cursor: pointer;"></i>
       </ng-container>
@@ -48,7 +47,6 @@ export class AmexioIconPaneComponent implements OnInit {
   }
 
   private getIconClass(): string {
-    console.log('iconClass');
     if (this.iconLoaderService.iconMappings != null) {
       const iconObject = this.iconLoaderService.iconMappings.find((obj: any) => obj.component === this.key);
       if (iconObject != null) {

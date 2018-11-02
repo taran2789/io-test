@@ -14,9 +14,9 @@
         <amexio-form-icon style="padding-right: 5px;" [customclass]="button.icon"></amexio-form-icon>
       </ng-container>
 
-      {{button.label}} 
+      {{button.label}}
       <ng-container *ngIf="button.badge">
-        <span [ngClass]="badgeClass()" >{{button.badge}}</span> 
+        <span [ngClass]="button.badgeCssClass" >{{button.badge}}</span>
      </ng-container>
     </button>
     </ng-container>

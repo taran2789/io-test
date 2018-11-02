@@ -10,7 +10,7 @@
          #inp="ngModel"
   />
   <input type="text" class="input-control"
-         [value]="getDisplayText()"
+         [value]="displayValue"
          [ngClass]="{'input-control-error' : inp.invalid && (inp.dirty || inp.touched),'input-control-success' : inp.valid && (inp.dirty || inp.touched)}"
          (blur)="onblur($event)"
          (click)="onDropDownClick($event)"

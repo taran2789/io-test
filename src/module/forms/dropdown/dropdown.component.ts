@@ -11,8 +11,8 @@
  for enabling filter, multi-select, maximum selection in case of multi select.
 */
 import {
-  Component, ContentChild, ElementRef, EventEmitter, forwardRef,
-  HostListener, Input, OnInit, Output, Renderer2, TemplateRef, ViewChild,
+   Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit,
+  Output, Renderer2, TemplateRef, ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonDataService } from '../../services/data/common.data.service';
@@ -25,7 +25,7 @@ const noop = () => {
   templateUrl: './dropdown.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AmexioDropDownComponent), multi: true,
-  }],
+  }]
 })
 export class AmexioDropDownComponent implements OnInit, ControlValueAccessor {
   /*
@@ -149,7 +149,7 @@ description : true for select multiple options
 
   helpInfoMsg: string;
 
-  displayValue: any;
+  displayValue = '';
 
   _errormsg: string;
 
@@ -302,7 +302,7 @@ description : Set enable / disable popover.
   selectedindex = 0;
   responseData: any;
   previousData: any;
-  viewData: any;
+  viewData: any[]= [];
   multiselectValues: any[] = [];
   maskloader = true;
   scrollposition = 30;
@@ -399,14 +399,17 @@ description : Set enable / disable popover.
       const valueKey = this.valuefield;
       const displayKey = this.displayfield;
       const val = this.value;
-      this.viewData.forEach((item: any) => {
-        if (item[valueKey] === val) {
-          this.isValid = true;
-          this.isComponentValid.emit(true);
-          this.displayValue = item[displayKey];
-          this.onSingleSelect.emit(item);
-        }
-      });
+      if(this.viewData.length > 0) {
+        this.viewData.forEach((item: any) => {
+          if (item[valueKey] === val) {
+            this.isValid = true;
+            this.isComponentValid.emit(true);
+            this.displayValue = item[displayKey];
+            this.onSingleSelect.emit(item);
+          }
+        });
+      }
+
     }
   }
   onItemSelect(row1: any) {
@@ -451,10 +454,11 @@ description : Set enable / disable popover.
   }
   navigateKey(event: any) {
   }
-  getDisplayText(): string {
+  getDisplayText() {
+    console.log('getDisplayText');
     if (this.value != null || this.value !== '' || this.value !== ' ') {
       if (this.multiselect) {
-        return this.setMultiSelect();
+        this.displayValue =  this.setMultiSelect();
       } else {
         this.displayValue = '';
         this.filteredOptions.forEach((test) => {
@@ -462,7 +466,7 @@ description : Set enable / disable popover.
             this.displayValue = test[this.displayfield];
           }
         });
-        return this.displayValue === undefined ? '' : this.displayValue;
+        this.displayValue = this.displayValue === undefined ? '' : this.displayValue;
       }
     }
   }
@@ -481,11 +485,13 @@ description : Set enable / disable popover.
     }
   }
   onDropDownClick(event: any) {
+    this.getDisplayText();
     this.onClick.emit(event);
   }
   onChange(event: any) {
     this.value = event;
     this.isValid = true;
+    this.getDisplayText();
     this.isComponentValid.emit(true);
   }
   onInput(input: any) {

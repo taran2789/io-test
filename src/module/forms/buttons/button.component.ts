@@ -121,6 +121,9 @@ default : false
 description : Set true to show buttom block
 */
   @Input() block: boolean;
+
+  badgeCssClass: string = '';
+
   // THIS METHOD IS USED FOR ADDING CSS CLASS DYNAMICALLY
   badgeClass(): string {
     let className = '';
@@ -151,6 +154,7 @@ description : Set true to show buttom block
     }
   }
   ngOnInit(): void {
+    this.badgeCssClass = this.badgeClass();
   }
 
   // THIS METHOD SET DISABLED PROPERTY FOR BUTTON

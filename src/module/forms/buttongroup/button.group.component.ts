@@ -88,6 +88,7 @@ export class AmexioButtonGroupComponent implements AfterContentInit, OnChanges {
       this.buttons = this.buttonGroupLocalData;
     } else {
       this.buttons = this.btns.toArray();
+      this.addBadgeCssClass();
     }
     this.setButtonSizes(this.buttons);
     this.componentLoaded = true;
@@ -100,9 +101,14 @@ export class AmexioButtonGroupComponent implements AfterContentInit, OnChanges {
     }
   }
 
-  badgeClass(): string {
+  addBadgeCssClass() {
+    this.buttons.forEach((btn: any) => {
+      btn['badgeCssClass'] = this.badgeClass(btn);
+    })
+  }
+
+  badgeClass(button: any): string {
     let className = '';
-    for (const button of this.buttons) {
       switch (button.type) {
         case 'primary': {
           return 'btn-group-primary-badge';
@@ -123,9 +129,7 @@ export class AmexioButtonGroupComponent implements AfterContentInit, OnChanges {
           return 'btn-group-success-badge';
         }
       }
-
       className = this.badgeMoreClass(button);
-    }
     return className;
   }
 
