@@ -388,7 +388,7 @@ description : Set enable / disable popover.
             row[this.displayfield] : preSelectedMultiValues += ',' + row[this.displayfield];
         }
       });
-      this.displayValue = preSelectedMultiValues;
+      this.displayValue = this.setMultiSelect();
       this.onMultiSelect.emit(this.multiselectValues);
     }
   }
