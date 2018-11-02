@@ -4,7 +4,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AmexioFooterComponent } from './action/pane.action.footer';
@@ -100,6 +100,7 @@ const PANE_COMPONENTS = [
     CommonModule,
     FormsModule,
     AmexioFormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
   ],
   entryComponents: [AmexioTabPillComponent],

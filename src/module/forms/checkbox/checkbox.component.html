@@ -1,9 +1,6 @@
-
-
-<div class="inputgroup">
-  <label class="input-box-container" >{{fieldlabel}}
-    <input type="checkbox" *ngIf="value" [ngClass]="{'checkbox-disable' : disabled}"  checked="checked" (input)="onInput(inp)" (click)="onClick()" [attr.disabled] = "disabled ? true: null" [required]="required">
-    <input type="checkbox" *ngIf="!value" [ngClass]="{'checkbox-disable' : disabled}" (click)="onClick()" (input)="onInput(inp)" [attr.disabled] = "disabled ? true: null" [required]="required">
-    <span class="input-box-checkbox-label"></span>
-  </label>
-</div>
+<div class="inputgroup " >
+    <label class="input-box-container" >{{fieldlabel}}
+      <input type="checkbox"  [attr.checked]="value" [ngClass]="{'checkbox-disable' : disabled}" (input)="onInput(inp)" (click)="onClick()" [attr.disabled] = "disabled ? true: null" [required]="required">
+      <span class="input-box-checkbox-label"></span>
+    </label>
+  </div>  

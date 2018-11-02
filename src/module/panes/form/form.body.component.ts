@@ -1,8 +1,11 @@
 
 import {Component, Input, OnInit} from '@angular/core';
-
+import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
-  selector: 'amexio-form-body', template: '<ng-content></ng-content>',
+  selector: 'amexio-form-body',
+  template: `
+  <ng-content></ng-content>
+  `,
 })
 
 export class AmexioFormBodyComponent implements OnInit {

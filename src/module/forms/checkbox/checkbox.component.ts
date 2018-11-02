@@ -6,10 +6,7 @@ Component Name : Amexio Checkbox
 Component Selector :  <amexio-checkbox>
 Component Description : Single checkbox having boolean based values.
 */
-import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnInit,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 const noop = () => {
 };
@@ -20,7 +17,6 @@ const noop = () => {
   providers: [{
     provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AmexioCheckBoxComponent), multi: true,
   }],
-  changeDetection:ChangeDetectionStrategy.OnPush,
 })
 export class AmexioCheckBoxComponent implements ControlValueAccessor, OnInit {
   // The internal dataviews model
@@ -79,22 +75,22 @@ export class AmexioCheckBoxComponent implements ControlValueAccessor, OnInit {
   isValid: boolean;
   @Output() isComponentValid: any = new EventEmitter<any>();
 
-  constructor(private _cdr: ChangeDetectorRef) {
+  constructor() {
   }
   ngOnInit() {
     this.isValid = !this.required;
     this.isComponentValid.emit(!this.required);
   }
   onInput(input: any) {
-    this.isValid = this.innerValue;
-    this.isComponentValid.emit(this.innerValue);
-    this.input.emit(this.innerValue);
+    this.isValid = this.value;
+    this.isComponentValid.emit(this.value);
+    this.input.emit(this.value);
   }
   onClick() {
-    this.innerValue = !this.innerValue;
-    this.isValid = this.innerValue;
-    this.isComponentValid.emit(this.innerValue);
-    this.onSelection.emit(this.innerValue);
+    this.value = !this.value;
+    this.isValid = this.value;
+    this.isComponentValid.emit(this.value);
+    this.onSelection.emit(this.value);
   }
   // get accessor
   get value(): any {
@@ -123,7 +119,6 @@ export class AmexioCheckBoxComponent implements ControlValueAccessor, OnInit {
   writeValue(value: any) {
     if (value !== this.innerValue) {
       this.innerValue = value;
-      this._cdr.detectChanges();
     }
   }
   // From ControlValueAccessor interface

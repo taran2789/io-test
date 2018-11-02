@@ -8,24 +8,7 @@ import {
   AfterContentInit, AfterViewInit, Component, ContentChildren,
   ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChild,
    ViewChildren} from '@angular/core';
-
-import { AmexioButtonComponent } from './../../forms/buttons/button.component';
-import { AmexioCheckBoxGroupComponent } from './../../forms/checkbox-group/checkbox.group.component';
-import { AmexioCheckBoxComponent } from './../../forms/checkbox/checkbox.component';
-import { AmexioDateTimePickerComponent } from './../../forms/datetimepicker/datetimepicker.component';
-import { AmexioDropDownComponent } from './../../forms/dropdown/dropdown.component';
-import { AmexioEmailInputComponent } from './../../forms/emailinput/emailinput.component';
-import { AmexioLabelComponent } from './../../forms/label/label.component';
-import { AmexioNumberInputComponent } from './../../forms/numberinput/numberinput.component';
-import { AmexioPasswordComponent } from './../../forms/passwordinput/passwordinput.component';
-import { AmexioRadioGroupComponent } from './../../forms/radio/radiogroup.component';
-import { AmexioTagsInputComponent } from './../../forms/tagsinput/tags.input.component';
-import { AmexioTextAreaComponent } from './../../forms/textarea/textarea.component';
-import { AmexioTextInputComponent } from './../../forms/textinput/textinput.component';
-import { AmexioTypeAheadComponent } from './../../forms/typeahead/typeahead.component';
-
-import { AmexioToggleComponent } from '../../forms/toggle/toggle.component';
-
+import { FormGroup } from '@angular/forms';
 import { AmexioFormActionComponent } from './form.action.component';
 import { AmexioFormBodyComponent } from './form.body.component';
 import { AmexioFormHeaderComponent } from './form.header.component';
@@ -42,52 +25,7 @@ export class AmexioFormComponent implements OnInit, AfterViewInit, AfterContentI
 
   checkForm: boolean;
 
-  @ContentChildren(AmexioTextInputComponent, { descendants: true }) queryTextinput: QueryList<AmexioTextInputComponent>;
-  textinput: AmexioTextInputComponent[];
-
-  @ContentChildren(AmexioTextAreaComponent, { descendants: true }) queryTextArea: QueryList<AmexioTextAreaComponent>;
-  textarea: AmexioTextAreaComponent[];
-
-  @ContentChildren(AmexioEmailInputComponent, { descendants: true }) queryEmailinput: QueryList<AmexioEmailInputComponent>;
-  emailinput: AmexioEmailInputComponent[];
-
-  @ContentChildren(AmexioNumberInputComponent, { descendants: true }) queryNuminput: QueryList<AmexioNumberInputComponent>;
-  numinput: AmexioNumberInputComponent[];
-
-  @ContentChildren(AmexioPasswordComponent, { descendants: true }) queryPassword: QueryList<AmexioPasswordComponent>;
-  password: AmexioPasswordComponent[];
-
-  @ContentChildren(AmexioCheckBoxComponent, { descendants: true }) queryCheckbox: QueryList<AmexioCheckBoxComponent>;
-  chkBox: AmexioCheckBoxComponent[];
-
-  @ContentChildren(AmexioCheckBoxGroupComponent, { descendants: true }) queryCheckboxGrp: QueryList<AmexioCheckBoxGroupComponent>;
-  chkBoxGrp: AmexioCheckBoxGroupComponent[];
-
-  @ContentChildren(AmexioRadioGroupComponent, { descendants: true }) queryRadio: QueryList<AmexioRadioGroupComponent>;
-  radio: AmexioRadioGroupComponent[];
-
-  @ContentChildren(AmexioDropDownComponent, { descendants: true }) queryDropdown: QueryList<AmexioDropDownComponent>;
-  dropdown: AmexioDropDownComponent[];
-
-  @ContentChildren(AmexioTypeAheadComponent, { descendants: true }) queryTypeahead: QueryList<AmexioTypeAheadComponent>;
-  typeahead: AmexioTypeAheadComponent[];
-
-  @ContentChildren(AmexioTagsInputComponent, { descendants: true }) queryTags: QueryList<AmexioTagsInputComponent>;
-  tags: AmexioTagsInputComponent[];
-
-  @ContentChildren(AmexioDateTimePickerComponent, { descendants: true }) queryDate: QueryList<AmexioDateTimePickerComponent>;
-  datefiled: AmexioDateTimePickerComponent[];
-
-  @ContentChildren(AmexioToggleComponent, { descendants: true }) queryToggle: QueryList<AmexioToggleComponent>;
-  toggle: AmexioToggleComponent[];
-
-  @ContentChildren(AmexioButtonComponent, { descendants: true }) btns: QueryList<AmexioButtonComponent>;
-  buttons: AmexioButtonComponent[];
-
-  @ContentChildren(AmexioFormActionComponent) queryFooter: QueryList<AmexioFormActionComponent>;
-  footer: AmexioFormActionComponent[];
-
-  /*
+/*
 Properties
 name : header-align
 datatype : string
@@ -165,6 +103,15 @@ default :
 description : Provides form body height.
 */
   @Input('body-height') bodyheight: any;
+/*
+Properties
+name : form-group
+datatype :   any
+version : 5.3.2 onwards
+default :
+description : This attribute use for form binding.
+*/
+  @Input('formGroup') formGroup: FormGroup;
 
   @ViewChild('formHeader', { read: ElementRef }) public formHeader: ElementRef;
 
@@ -188,6 +135,8 @@ description : Event fired if showError msg info button is clicked
 
   footerPadding: string;
 
+  errorMsgArray: any[];
+
   @ContentChildren(AmexioFormHeaderComponent) amexioHeader: QueryList<AmexioFormHeaderComponent>;
 
   headerComponentList: AmexioFormHeaderComponent[];
@@ -200,16 +149,13 @@ description : Event fired if showError msg info button is clicked
 
   footerComponentList: AmexioFormActionComponent[];
 
-  @ContentChildren(AmexioLabelComponent, { descendants: true }) queryLabel: QueryList<AmexioLabelComponent>;
-
- label: AmexioLabelComponent[];
-
   constructor() {
     this.checkForm = false;
     this.isFormValid = false;
     this.showDialogue = false;
     this.headeralign = 'left';
     this.footeralign = 'right';
+    this.errorMsgArray = [];
   }
   ngAfterContentInit() {
     // FOR HEADER PADING
@@ -261,12 +207,39 @@ description : Event fired if showError msg info button is clicked
 
   ngAfterViewInit() {
     this.onResize();
-
   }
 
   closeDialogue() {
     this.showDialogue = !this.showDialogue;
   }
 
+  // THIS METHOD IS USED FOR ADDING MSG
+  addErrorMsg() {
+    if (this.formGroup && this.formGroup.status === 'INVALID') {
+      for ( const [key, value] of Object.entries( this.formGroup.controls ) ) {
+        if (value && value.status === 'INVALID') {
+          const errorObject: any = {};
+          errorObject['label'] = key;
+          this.errorMsgArray.push(errorObject);
+         }
+        }
+    }
+  }
+
+  // REMOVE OBJECT FROM ARRAY
+  showErrors(event: any) {
+    this.errorMsgArray = [];
+    this.addErrorMsg();
+    this.showDialogue = !this.isFormValid;
+    if (!this.isFormValid) {
+      this.showDialogue = true;
+    } else {
+      this.showDialogue = false;
+    }
+  }
+
+  getErrorMsgData(): any {
+    return this.componentError;
+  }
 
 }

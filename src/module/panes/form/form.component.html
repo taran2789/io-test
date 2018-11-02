@@ -1,10 +1,10 @@
-<form name="fname" class="form-container" (window:resize)="onResize()">
+<form [formGroup]="formGroup" name="fname" class="form-container" (window:resize)="onResize()">
 
   <header #formHeader class="form-header" [style.padding]="headerPadding"  *ngIf="header" >
     <ng-content select="amexio-form-header"></ng-content>
   </header>
 
-  <div class="form-body formbody" [style.padding]="bodyPadding" [ngStyle]="{'height.px' : height,'overflow-y' : height!= null ? 'auto' : '','min-height.px' : minHeight,'max-height.px' : minHeight}" >
+  <div class="form-body formbody" [style.padding]="bodyPadding" [ngStyle]="{'height.px' : height,'overflow-y' : height!= null ? 'auto' : '','min-height.px' : minHeight}" >
     <ng-content select="amexio-form-body"></ng-content>
   </div>
 
@@ -12,7 +12,7 @@
       [ngClass]="{'flex-start':(footeralign=='left'),'flex-end':(footeralign=='right'),'flex-center':(footeralign=='center')}">
       <ng-content select="amexio-form-action"></ng-content>
       <br/>
-      <div *ngIf="showError && componentError.length > 0" style="padding: 5px;">
+      <div *ngIf="!formGroup.valid" style="padding: 5px;">
           <button class="button" [attr.title]="'click'" (click)="showErrors($event)"
           [ngClass]="'button-warning button-small button-round'">
                   <span class="button-text">
@@ -32,7 +32,7 @@
             [title]="'Invalid Fields'"
                           [type]="'confirm'">
 
-            <amexio-body *ngFor="let msg of componentError let index=index">
+            <amexio-body *ngFor="let msg of errorMsgArray let index=index">
               <amexio-label>{{index+1}}) {{msg.label}}</amexio-label><br>
             </amexio-body>
 
