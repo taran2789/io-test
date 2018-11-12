@@ -9,8 +9,9 @@
 
  */
 import {
-  Component, ContentChildren, ElementRef, EventEmitter, HostListener,
-  Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild } from '@angular/core';
+   Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit,
+  Output, QueryList, SimpleChanges, ViewChild
+} from '@angular/core';
 import { AmexioWindowHeaderComponent } from './window.pane.header.component';
 export enum KEY_CODE_window {
   esc = 27,
@@ -23,7 +24,7 @@ export enum KEY_CODE_window {
          [ngStyle]="{'display' : show ? 'block' : 'none'}"
          (contextmenu)="loadContextMenu({event:$event,ref:id})" >
       <div class="modal-window-lg" [ngStyle]="{'height': bodyHeight ? '100%':'auto'}">
-        <div class="modal-window-content" [ngClass]="setClass()" [style.height]="bodyHeight+'%'">
+        <div class="modal-window-content" [ngClass]="styleClass" [style.height]="bodyHeight+'%'">
           <header [ngClass]="{ 'window-material-design-header':materialDesign,'modal-window-header':!materialDesign}" *ngIf="header"   >
             <div class="modal-window-table">
               <div class="tablerow">
@@ -243,6 +244,8 @@ description : Context Menu provides the list of menus on right click.
   headerComponentList: AmexioWindowHeaderComponent[];
 
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
+
+  styleClass: string;
   constructor() {
     this.header = true;
     this.closable = true;
@@ -270,6 +273,7 @@ description : Context Menu provides the list of menus on right click.
 
   sizeChange() {
     this.isFullWindow = !this.isFullWindow;
+    this.setClass();
   }
 
   onCloseClick() {
@@ -282,14 +286,14 @@ description : Context Menu provides the list of menus on right click.
     }
   }
 
-  // Escape Key Functionality
+/*  // Escape Key Functionality
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     if (this.closeonescape === true && event.keyCode === KEY_CODE_window.esc) {
         this.showWindow = false;
         this.showChange.emit(false);
     }
-  }
+  }*/
   ngOnInit() {
 
     if (this.showWindow) {
@@ -314,6 +318,7 @@ description : Context Menu provides the list of menus on right click.
       this.horizontalposition = 'center';
     }
     this.positionclass = this.window + this.verticalposition + this.window + this.horizontalposition;
+    this.setClass();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -324,14 +329,13 @@ description : Context Menu provides the list of menus on right click.
     }
 
   }
-  setClass(): any {
-    let styleClass: string;
+  setClass() {
+    console.log('setClass');
     if (this.isFullWindow) {
-      styleClass = 'modal-window-content-max';
+      this.styleClass = 'modal-window-content-max';
     } else {
-      styleClass = this.positionclass;
+      this.styleClass = this.positionclass;
     }
-    return styleClass;
   }
   // context menu code below
   getContextMenu() {
@@ -370,7 +374,7 @@ description : Context Menu provides the list of menus on right click.
     }
   }
 
-  @HostListener('document:click')
+/*  @HostListener('document:click')
   onWindowClick() {
     this.flag = false;
   }
@@ -378,7 +382,7 @@ description : Context Menu provides the list of menus on right click.
   @HostListener('document:scroll')
   onscroll() {
     this.flag = false;
-  }
+  }*/
 
   getContextMenuStyle() {
     return {

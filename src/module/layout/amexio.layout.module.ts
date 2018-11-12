@@ -25,7 +25,6 @@ import {IconLoaderService} from '../services/icon/icon.service';
 export * from './accordion/accordion.header.component';
 export * from './accordion/accordion.pane';
 export * from './accordion/accordion.component';
-export * from './accordion/accordion.service';
 export * from './border/borderlayoutitem.component';
 export * from './border/borderlayout.component';
 export * from './box/box.component';

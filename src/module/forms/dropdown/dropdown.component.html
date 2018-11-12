@@ -13,9 +13,7 @@
          [value]="displayValue"
          [ngClass]="{'input-control-error' : inp.invalid && (inp.dirty || inp.touched),'input-control-success' : inp.valid && (inp.dirty || inp.touched)}"
          (blur)="onblur($event)"
-         (click)="onDropDownClick($event)"
          (focus)="onFocus(rootDiv)"
-         (input)="onInput(inp)"
          [attr.placeholder]="placeholder"
          [readonly]="readonly ? true : null"
          [attr.disabled]="disabled ? true: null"
@@ -23,7 +21,6 @@
 
 
   <span class="drodown-caret-down" (click)="onIconClick()">
-    <amexio-form-icon key="dropdown_caret" *ngIf="!maskloader" ></amexio-form-icon>
     <em class="fa fa-spinner fa-spin" *ngIf="maskloader"></em>
   </span>
 

@@ -281,7 +281,7 @@ export class AmexioSideNavComponent implements OnInit {
     }
   }
 
-  @HostListener('document:click', ['$event.target']) @HostListener('document: touchstart', ['$event.target'])
+  /*@HostListener('document:click', ['$event.target']) @HostListener('document: touchstart', ['$event.target'])
   public onElementOutClick(targetElement: HTMLElement) {
     let parentFound = false;
     while (targetElement != null && !parentFound) {
@@ -293,7 +293,7 @@ export class AmexioSideNavComponent implements OnInit {
     if (!parentFound) {
       this.close();
     }
-  }
+  }*/
 
   dragStartEvent(event: any) {
     if (this.enabledrag) {

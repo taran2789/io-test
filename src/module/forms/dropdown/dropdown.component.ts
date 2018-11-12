@@ -1,4 +1,7 @@
 /**
+ * Created by dattaram on 12/11/18.
+ */
+/**
  * Created by pratik on 1/12/17.
  */
 
@@ -9,13 +12,14 @@
  N numbers of drop-down items based on data-set configured. Data-set can be
  configured using HTTP call OR Define fix number of dropdown-items. User can configure different attributes
  for enabling filter, multi-select, maximum selection in case of multi select.
-*/
+ */
 import {
-   Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit,
-  Output, Renderer2, TemplateRef, ViewChild,
+  Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit,
+  Output, TemplateRef, ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { CommonDataService } from '../../services/data/common.data.service';
+import {HttpClient} from "@angular/common/http";
+import {CommonDataService} from "../../services/data/common.data.service";
 
 const noop = () => {
 };
@@ -29,32 +33,32 @@ const noop = () => {
 })
 export class AmexioDropDownComponent implements OnInit, ControlValueAccessor {
   /*
-Properties
-name : field-label
-datatype : string
-version : 4.0 onwards
-default :
-description : The label of this field
-*/
+   Properties
+   name : field-label
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : The label of this field
+   */
   @Input('field-label') fieldlabel: string;
   /*
-Properties
-name : allow-blank
-datatype : string
-version : 4.0 onwards
-default :
-description : Sets if field is required
-*/
+   Properties
+   name : allow-blank
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : Sets if field is required
+   */
   @Input('allow-blank') allowblank: boolean;
 
   /*
-Properties
-name : data
-datatype : any
-version : 4.0 onwards
-default :
-description : Local data for dropdown.
-*/
+   Properties
+   name : data
+   datatype : any
+   version : 4.0 onwards
+   default :
+   description : Local data for dropdown.
+   */
   _data: any;
   componentLoaded: boolean;
   @Input('data')
@@ -68,81 +72,81 @@ description : Local data for dropdown.
     return this._data;
   }
   /*
- Properties
- name : data-reader
- datatype : string
- version : 4.0 onwards
- default :
- description : Key in JSON datasource for records
- */
+   Properties
+   name : data-reader
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : Key in JSON datasource for records
+   */
   @Input('data-reader') datareader: string;
 
   /*
-  Properties
-  name : http-method
-  datatype : string
-  version : 4.0 onwards
-  default :
-  description : Type of HTTP call, POST,GET.
-  */
+   Properties
+   name : http-method
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : Type of HTTP call, POST,GET.
+   */
   @Input('http-method') httpmethod: string;
 
   /*
- Properties
- name : http-url
- datatype : string
- version : 4.0 onwards
- default :
- description : REST url for fetching datasource.
- */
+   Properties
+   name : http-url
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : REST url for fetching datasource.
+   */
   @Input('http-url') httpurl: string;
 
   /*
-Properties
-name : display-field
-datatype : string
-version : 4.0 onwards
-default :
-description : Name of key inside response data to display on ui.
-*/
+   Properties
+   name : display-field
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : Name of key inside response data to display on ui.
+   */
   @Input('display-field') displayfield: string;
   /*
-Properties
-name : value-field
-datatype : string
-version : 4.0 onwards
-default :
-description : Name of key inside response data.use to send to backend
-*/
+   Properties
+   name : value-field
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : Name of key inside response data.use to send to backend
+   */
   @Input('value-field') valuefield: string;
 
   /*
-Properties
-name : search
-datatype : boolean
-version : 4.0 onwards
-default : false
-description : true for search box enable
-*/
+   Properties
+   name : search
+   datatype : boolean
+   version : 4.0 onwards
+   default : false
+   description : true for search box enable
+   */
   @Input() search: boolean;
   /*
-  Properties
-  name : readonly
-  datatype : boolean
-  version : 4.2.1 onwards
-  default : false
-  description : true for set dropdown input readonly.
-  */
+   Properties
+   name : readonly
+   datatype : boolean
+   version : 4.2.1 onwards
+   default : false
+   description : true for set dropdown input readonly.
+   */
   @Input() readonly: boolean;
 
   /*
-Properties
-name : multi-select
-datatype : boolean
-version : 4.0 onwards
-default : false
-description : true for select multiple options
-*/
+   Properties
+   name : multi-select
+   datatype : boolean
+   version : 4.0 onwards
+   default : false
+   description : true for select multiple options
+   */
   @Input('multi-select') multiselect: boolean;
 
   @ViewChild('dropdownitems', { read: ElementRef }) public dropdownitems: ElementRef;
@@ -159,141 +163,141 @@ description : true for select multiple options
     return this._errormsg;
   }
   /*
-  Properties
-  name : error-msg
-  datatype : string
-  version : 4.0 onwards
-  default :
-  description : Sets the error message
-  */
+   Properties
+   name : error-msg
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : Sets the error message
+   */
   @Input('error-msg')
   set errormsg(value: string) {
     this.helpInfoMsg = value + '<br/>';
   }
   /*
-  Events
-  name : onBlur
-  datatype : any
-  version : 4.0 onwards
-  default :
-  description : 	On blur event
-  */
+   Events
+   name : onBlur
+   datatype : any
+   version : 4.0 onwards
+   default :
+   description : 	On blur event
+   */
   @Output() onBlur: any = new EventEmitter<any>();
   /*
-Events
-name : input
-datatype : any
-version : none
-default :
-description : 	On input event field.
-*/
+   Events
+   name : input
+   datatype : any
+   version : none
+   default :
+   description : 	On input event field.
+   */
   @Output() input: any = new EventEmitter<any>();
   /*
-Events
-name : focus
-datatype : any
-version : none
-default :
-description : On field focus event
-*/
+   Events
+   name : focus
+   datatype : any
+   version : none
+   default :
+   description : On field focus event
+   */
   @Output() focus: any = new EventEmitter<any>();
   /*
-Events
-name : onSingleSelect
-datatype : any
-version : none
-default :
-description : Fire when drop down item selected.
-*/
+   Events
+   name : onSingleSelect
+   datatype : any
+   version : none
+   default :
+   description : Fire when drop down item selected.
+   */
   @Output() onSingleSelect: any = new EventEmitter<any>();
   /*
-Events
-name : onMultiSelect
-datatype : any
-version :none
-default :
-description : Fire when multiple record select in drop down.this event is only
-applied when multi-select=true
-*/
+   Events
+   name : onMultiSelect
+   datatype : any
+   version :none
+   default :
+   description : Fire when multiple record select in drop down.this event is only
+   applied when multi-select=true
+   */
   @Output() onMultiSelect: any = new EventEmitter<any>();
   /*
-Events
-name : onClick
-datatype : any
-version :none
-default :
-description : On record select event.this event is only for normal dropdown.
-*/
+   Events
+   name : onClick
+   datatype : any
+   version :none
+   default :
+   description : On record select event.this event is only for normal dropdown.
+   */
   @Output() onClick: any = new EventEmitter<any>();
   showToolTip: boolean;
   /*
-Properties
-name : place-holder
-datatype : string
-version : 4.0 onwards
-default :
-description : 	Show place-holder inside dropdown component*/
+   Properties
+   name : place-holder
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : 	Show place-holder inside dropdown component*/
   @Input('place-holder') placeholder: string;
   /*
-Properties
-name : disabled
-datatype :  boolean
-version : 4.0 onwards
-default : false
-description : If true will not react on any user events and show disable icon over*/
+   Properties
+   name : disabled
+   datatype :  boolean
+   version : 4.0 onwards
+   default : false
+   description : If true will not react on any user events and show disable icon over*/
   @Input() disabled: boolean;
   /*
-Properties
-name : icon-feedback
-datatype : boolean
-version : 4.0 onwards
-default : false
-description : */
+   Properties
+   name : icon-feedback
+   datatype : boolean
+   version : 4.0 onwards
+   default : false
+   description : */
   @Input('icon-feedback') iconfeedback: boolean;
   /*
-Properties
-name : font-style
-datatype : string
-version : 4.0 onwards
-default :
-description : Set font-style to field
-*/
+   Properties
+   name : font-style
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : Set font-style to field
+   */
   @Input('font-style') fontstyle: string;
   /*
-Properties
-name : font-family
-datatype : string
-version : 4.0 onwards
-default :
-description : Set font-family to field
-*/
+   Properties
+   name : font-family
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : Set font-family to field
+   */
   @Input('font-family') fontfamily: string;
   /*
-Properties
-name : font-size
-datatype : string
-version : 4.0 onwards
-default :
-description : Set font-size to field
-*/
+   Properties
+   name : font-size
+   datatype : string
+   version : 4.0 onwards
+   default :
+   description : Set font-size to field
+   */
   @Input('font-size') fontsize: string;
   /*
-Properties
-name : has-label
-datatype : boolean
-version : 4.0 onwards
-default : false
-description : flag to set label
-*/
+   Properties
+   name : has-label
+   datatype : boolean
+   version : 4.0 onwards
+   default : false
+   description : flag to set label
+   */
   @Input('has-label') haslabel = true;
   /*
-Properties
-name : enable-popover
-datatype : boolean
-version : 4.0 onwards
-default :false
-description : Set enable / disable popover.
-*/
+   Properties
+   name : enable-popover
+   datatype : boolean
+   version : 4.0 onwards
+   default :false
+   description : Set enable / disable popover.
+   */
   @Input('enable-popover') enablepopover: boolean;
 
   @ContentChild('amexioBodyTmpl') bodyTemplate: TemplateRef<any>;
@@ -314,21 +318,21 @@ description : Set enable / disable popover.
   private onChangeCallback: (_: any) => void = noop;
 
   @Output() isComponentValid: any = new EventEmitter<any>();
-  @HostListener('document:click', ['$event.target']) @HostListener('document: touchstart',
-    ['$event.target'])
-  public onElementOutClick(targetElement: HTMLElement) {
-    let parentFound = false;
-    while (targetElement != null && !parentFound) {
-      if (targetElement === this.element.nativeElement) {
-        parentFound = true;
-      }
-      targetElement = targetElement.parentElement;
-    }
-    if (!parentFound) {
-      this.showToolTip = false;
-    }
-  }
-  constructor(public dataService: CommonDataService, public element: ElementRef, public renderer: Renderer2) {
+  /* @HostListener('document:click', ['$event.target']) @HostListener('document: touchstart',
+   ['$event.target'])
+   public onElementOutClick(targetElement: HTMLElement) {
+   let parentFound = false;
+   while (targetElement != null && !parentFound) {
+   if (targetElement === this.element.nativeElement) {
+   parentFound = true;
+   }
+   targetElement = targetElement.parentElement;
+   }
+   if (!parentFound) {
+   this.showToolTip = false;
+   }
+   }*/
+  constructor(public dataService: CommonDataService, public _http: HttpClient) {
   }
   ngOnInit() {
     this.isValid = this.allowblank;
@@ -371,7 +375,7 @@ description : Set enable / disable popover.
   setResponseData(responsedata: any) {
     if (responsedata) {
       this.viewData = responsedata.sort((a: any, b: any) => a[this.displayfield].toLowerCase()
-        !== b[this.displayfield].toLowerCase() ?
+      !== b[this.displayfield].toLowerCase() ?
         a[this.displayfield].toLowerCase() < b[this.displayfield].toLowerCase() ? -1 : 1 : 0);
       this.filteredOptions = this.viewData;
     }
@@ -381,12 +385,17 @@ description : Set enable / disable popover.
       let preSelectedMultiValues = '';
       const optionsChecked: any = [];
       this.viewData.forEach((row: any) => {
-        if (row.hasOwnProperty('checked') && row.checked) {
-          optionsChecked.push(row[this.valuefield]);
-          this.multiselectValues.push(row);
-          preSelectedMultiValues === '' ? preSelectedMultiValues +=
-            row[this.displayfield] : preSelectedMultiValues += ',' + row[this.displayfield];
+        if(row.hasOwnProperty('checked')) {
+          if (row.checked) {
+            optionsChecked.push(row[this.valuefield]);
+            this.multiselectValues.push(row);
+            preSelectedMultiValues === '' ? preSelectedMultiValues +=
+              row[this.displayfield] : preSelectedMultiValues += ',' + row[this.displayfield];
+          }
+        } else {
+          row['checked'] = false;
         }
+
       });
       this.displayValue = this.setMultiSelect();
       this.onMultiSelect.emit(this.multiselectValues);
@@ -395,10 +404,10 @@ description : Set enable / disable popover.
 
   setUserSelection() {
     // Set user selection
-    if (this.value != null) {
+    if (this.innerValue != null) {
       const valueKey = this.valuefield;
       const displayKey = this.displayfield;
-      const val = this.value;
+      const val = this.innerValue;
       if(this.viewData.length > 0) {
         this.viewData.forEach((item: any) => {
           if (item[valueKey] === val) {
@@ -412,34 +421,35 @@ description : Set enable / disable popover.
 
     }
   }
-  onItemSelect(row1: any) {
+  onItemSelect(selectedItem: any) {
     if (this.multiselect) {
       const optionsChecked: any[] = [];
       this.multiselectValues = [];
-      if (row1.hasOwnProperty('checked')) {
-        row1.checked = !row1.checked;
+      if (selectedItem.hasOwnProperty('checked')) {
+        selectedItem.checked = !selectedItem.checked;
         this.filteredOptions.forEach((row: any) => {
           if (row.checked) {
             optionsChecked.push(row[this.valuefield]);
             this.multiselectValues.push(row);
           }
         });
-        this.value = optionsChecked;
+        this.innerValue = optionsChecked;
+        this.displayValue = this.setMultiSelect();
         this.onMultiSelect.emit(this.multiselectValues);
       }
     } else {
-      this.value = row1[this.valuefield];  // Issue here?
-      this.displayValue = row1[this.displayfield];
+      this.innerValue = selectedItem[this.valuefield];  // Issue here?
+      this.displayValue = selectedItem[this.displayfield];
       this.multiselect ? this.showToolTip = true : this.showToolTip = false;
-      this.onSingleSelect.emit(row1);
+      this.onSingleSelect.emit(selectedItem);
     }
     this.isValid = true;
     this.isComponentValid.emit(true);
   }
   setMultiSelectData() {
     this.multiselectValues = [];
-    if (this.value.length > 0) {
-      const modelValue = this.value;
+    if (this.innerValue.length > 0) {
+      const modelValue = this.innerValue;
       this.filteredOptions.forEach((test) => {
         modelValue.forEach((mdValue: any) => {
           if (test[this.valuefield] === mdValue) {
@@ -455,14 +465,13 @@ description : Set enable / disable popover.
   navigateKey(event: any) {
   }
   getDisplayText() {
-    console.log('getDisplayText');
-    if (this.value != null || this.value !== '' || this.value !== ' ') {
+    if (this.innerValue != null || this.innerValue !== '' || this.innerValue !== ' ') {
       if (this.multiselect) {
         this.displayValue =  this.setMultiSelect();
       } else {
         this.displayValue = '';
         this.filteredOptions.forEach((test) => {
-          if (test[this.valuefield] === this.value) {
+          if (test[this.valuefield] === this.innerValue) {
             this.displayValue = test[this.displayfield];
           }
         });
@@ -485,11 +494,11 @@ description : Set enable / disable popover.
     }
   }
   onDropDownClick(event: any) {
-    this.getDisplayText();
-    this.onClick.emit(event);
+    /* this.getDisplayText();
+     this.onClick.emit(event);*/
   }
   onChange(event: any) {
-    this.value = event;
+    this.innerValue = event;
     this.isValid = true;
     this.getDisplayText();
     this.isComponentValid.emit(true);
@@ -516,7 +525,7 @@ description : Set enable / disable popover.
       }
     }
     if (event.keyCode === 8) {
-      this.value = '';
+      this.innerValue = '';
     }
     if (event.keyCode === 40 || event.keyCode === 38 || event.keyCode === 13) {
       this.navigateUsingKey(event);
@@ -578,8 +587,8 @@ description : Set enable / disable popover.
   // set accessor including call the onchange callback
   set value(v: any) {
     if (v != null && v !== this.innerValue) {
-        this.innerValue = v;
-        this.onChangeCallback(v);
+      this.innerValue = v;
+      this.onChangeCallback(v);
     }
   }
   // Set touched on blur
@@ -613,9 +622,9 @@ description : Set enable / disable popover.
   writeValue(value: any) {
     if (!this.allowblank) {
       if (value != null) {
-       this.writeChangedValue(value);
+        this.writeChangedValue(value);
       } else {
-        this.value = '';
+        this.innerValue = '';
         this.isValid = true;
       }
     }
@@ -630,6 +639,7 @@ description : Set enable / disable popover.
         });
       }
       this.innerValue = value;
+      this.displayValue = this.innerValue;
     }
   }
 
