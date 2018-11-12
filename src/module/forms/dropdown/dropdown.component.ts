@@ -635,11 +635,11 @@ export class AmexioDropDownComponent implements OnInit, ControlValueAccessor {
         this.viewData.forEach((item: any) => {
           if (item[this.valuefield] === value) {
             this.isValid = true;
+            this.displayValue = item[this.displayfield];
           }
         });
       }
       this.innerValue = value;
-      this.displayValue = this.innerValue;
     }
   }
 
