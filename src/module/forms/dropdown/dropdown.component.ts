@@ -438,7 +438,7 @@ export class AmexioDropDownComponent implements OnInit, ControlValueAccessor {
         this.onMultiSelect.emit(this.multiselectValues);
       }
     } else {
-      this.innerValue = selectedItem[this.valuefield];  // Issue here?
+      this.value = selectedItem[this.valuefield];  // Issue here?
       this.displayValue = selectedItem[this.displayfield];
       this.multiselect ? this.showToolTip = true : this.showToolTip = false;
       this.onSingleSelect.emit(selectedItem);
@@ -639,7 +639,7 @@ export class AmexioDropDownComponent implements OnInit, ControlValueAccessor {
           }
         });
       }
-      this.innerValue = value;
+      this.value = value;
     }
   }
 
