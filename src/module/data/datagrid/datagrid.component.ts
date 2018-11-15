@@ -7,8 +7,8 @@
  header and column data, displaying summation of numeric column.
  */
 import {
-  AfterContentInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, OnInit, Output,
-  QueryList,
+  AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter,
+  HostListener, Input, OnInit, Output, QueryList,
 } from '@angular/core';
 import { AmexioGridColumnComponent } from './data.grid.column';
 
@@ -383,6 +383,7 @@ import { CommonDataService } from '../../services/data/common.data.service';
       </ng-container>
     </div>
   `,
+  changeDetection:ChangeDetectionStrategy.OnPush,
 })
 
 export class AmexioDatagridComponent implements OnInit, AfterContentInit {
@@ -726,7 +727,7 @@ export class AmexioDatagridComponent implements OnInit, AfterContentInit {
 
   @ContentChildren(AmexioGridColumnComponent) columnRef: QueryList<AmexioGridColumnComponent>;
 
-  constructor(public element: ElementRef, public dataTableService: CommonDataService, private cd: ChangeDetectorRef) {
+  constructor(public element: ElementRef, public dataTableService: CommonDataService, private _cdr: ChangeDetectorRef) {
     this.selectedRows = [];
     this.sortBy = -1;
 
@@ -762,6 +763,7 @@ export class AmexioDatagridComponent implements OnInit, AfterContentInit {
         },
         () => {
           this.setData(this.responseData);
+          this._cdr.detectChanges();
         },
       );
     } else if (this.data) {
@@ -775,11 +777,13 @@ export class AmexioDatagridComponent implements OnInit, AfterContentInit {
     if (this.previousData != null && JSON.stringify(this.previousData) !== JSON.stringify(this.data)) {
       this.previousData = JSON.parse(JSON.stringify(this.data));
       this.setChangeData(this.data);
+      this._cdr.detectChanges();
     }
     if (this.columnPreviewData != null && this.columndefintion != null &&
       JSON.stringify(this.columnPreviewData) !== JSON.stringify(this.columndefintion)) {
       this.columnPreviewData = JSON.parse(JSON.stringify(this.columndefintion));
       this.columns = this.columndefintion;
+      this._cdr.detectChanges();
     }
 
   }
@@ -1013,7 +1017,7 @@ export class AmexioDatagridComponent implements OnInit, AfterContentInit {
     }
     /*-------Aggregation---------*/
     this.renderData();
-    this.cd.detectChanges();
+    this._cdr.detectChanges();
   }
 
   renderData() {   // calculate page no for pagination

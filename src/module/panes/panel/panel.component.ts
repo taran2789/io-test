@@ -216,12 +216,18 @@ description : Fires the on accordion pane click event.
 
   @HostListener('document:click')
   onWindowClick() {
-    this.flag = false;
+    this.resetFlag();
   }
 
   @HostListener('document:scroll')
   onscroll() {
-    this.flag = false;
+    this.resetFlag();
+  }
+
+  resetFlag() {
+    if(this.flag) {
+      this.flag = false;
+    }
   }
 
   getContextMenuStyle() {

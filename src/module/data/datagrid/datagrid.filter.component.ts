@@ -11,7 +11,7 @@ client-side pagination, column hide/unhide, single/multi selection,Filtering
 (enable only for string and number type data) user define template for rendering
 for column header and column data, displaying summation of numeric column.
 */
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { CommonDataService } from '../../services/data/common.data.service';
 @Component({
   selector: 'data-grid-filter', template: `
@@ -63,6 +63,7 @@ import { CommonDataService } from '../../services/data/common.data.service';
     </ng-container>
 
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class DataGridFilterComponent implements OnInit {

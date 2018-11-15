@@ -238,10 +238,6 @@ description : Context Menu provides the list of menus on right click.
     this.componentLoaded = true;
   }
 
-  getDate() {
-    return new Date().getTime();
-  }
-
   updateComponent() {
     if (JSON.stringify(this.previousValue) !== JSON.stringify(this.data) && this.previousValue != null && this.data != null) {
       this.previousValue = JSON.parse(JSON.stringify(this.data));

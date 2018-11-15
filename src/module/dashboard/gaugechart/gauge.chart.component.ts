@@ -17,7 +17,10 @@
  Component Description : A gauge with a dial,rendered within the browser using SVG.
  Gauges are available under AmexioDashboardModule from amexio-ng-extensions/dashboard
 */
-import {AfterContentInit, Component, ContentChildren, ElementRef, Input, OnInit, QueryList, ViewChild} from '@angular/core';
+import {
+  AfterContentInit, ChangeDetectionStrategy, Component, ContentChildren, ElementRef, Input, OnInit, QueryList,
+  ViewChild
+} from '@angular/core';
 import {DashboardLoaderService} from '../chart.loader.service';
 import {DashBoardTitleComponent} from '../dashboardtitle/dashboard.title.component';
 declare var google: any;
@@ -135,6 +138,7 @@ declare var google: any;
   }
 
   ` ] ,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class GaugeChartComponent implements AfterContentInit, OnInit {

@@ -10,10 +10,7 @@
  custom error message, help, custom styles
 */
 
-import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnInit,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonDataService} from '../../services/data/common.data.service';
 
@@ -26,7 +23,6 @@ const noop = () => {
   providers: [{
     provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AmexioRadioGroupComponent), multi: true,
   }],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class AmexioRadioGroupComponent implements OnInit {
@@ -164,7 +160,7 @@ export class AmexioRadioGroupComponent implements OnInit {
   // The internal dataviews model
   private innerValue: any = '';
 
-  constructor(public amxHttp: CommonDataService, private cdf: ChangeDetectorRef) {
+  constructor(public amxHttp: CommonDataService) {
   }
 
   ngOnInit() {
@@ -226,7 +222,6 @@ export class AmexioRadioGroupComponent implements OnInit {
   writeValue(value: any) {
     if (value !== this.innerValue) {
       this.innerValue = value;
-      this.cdf.detectChanges();
     }
   }
 
