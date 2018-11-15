@@ -413,14 +413,78 @@ description : If "true" add two context menus i.e close All and close Others tab
 
   }
 
+  setDisableTabs(disabledTabInput: any[]) {
+    let flag = false;
+    if(disabledTabInput.length > 0) {
+      disabledTabInput.forEach((ele: any)=> {
+        if (typeof ele === 'string') {
+          this.tabCollection.forEach((tabs) => {
+            tabs.tabPillClass = '';
+            if (ele.trim().toLowerCase() === tabs.title.trim().toLowerCase()) {
+              tabs.disabled = true;
+              flag = true;
+            }
+            this.asignTabPillClass(tabs);
+          });
+        } else if (typeof ele === 'number') {
+          this.tabCollection.forEach((tabs: any, index: number) => {
+            tabs.tabPillClass = '';
+            if (index + 1 === ele) {
+              tabs.active = true;
+              flag = true;
+            } else {
+              tabs.active = false;
+            }
+            this.asignTabPillClass(tabs);
+          });
+        }
+      });
+    }
+
+    return flag;
+
+  }
+
+  setEnableTabs(disabledTabInput: any[]) {
+    let flag = false;
+    if(disabledTabInput.length > 0) {
+      disabledTabInput.forEach((ele: any)=> {
+        if (typeof ele === 'string') {
+          this.tabCollection.forEach((tabs) => {
+            tabs.tabPillClass = '';
+            if (ele.trim().toLowerCase() === tabs.title.trim().toLowerCase()) {
+              tabs.disabled = false;
+              flag = true;
+            }
+            this.asignTabPillClass(tabs);
+          });
+        } else if (typeof ele === 'number') {
+          this.tabCollection.forEach((tabs: any, index: number) => {
+            tabs.tabPillClass = '';
+            if (index + 1 === ele) {
+              tabs.disabled = false;
+              flag = true;
+            }
+            this.asignTabPillClass(tabs);
+          });
+        }
+      });
+    }
+
+    return flag;
+
+  }
+
   selectTab(tab: AmexioTabPillComponent) {
     // deactivate all tabs
     this.tabCollection.forEach((tab1: any) => {
       tab1.active = false;
-      tab1.tabPillClass = '';
       });
     tab.active = true;
     this.asignTabPillClass(tab);
+    this.tabCollection.forEach((tab1: any) => {
+      this.asignTabPillClass(tab1);
+    });
 
 
   }
@@ -457,6 +521,9 @@ description : If "true" add two context menus i.e close All and close Others tab
           i['tabPillClass']='';
         }
       }
+      this.tabCollection.forEach((tab1: any) => {
+        this.asignTabPillClass(tab1);
+      });
     }
   }
 
@@ -516,6 +583,8 @@ description : If "true" add two context menus i.e close All and close Others tab
   }
 
   asignTabPillClass(tabData: AmexioTabPillComponent) {
+    debugger;
+    tabData.tabPillClass = '';
     if ((!tabData.amexiocolor || tabData.amexiocolor === '') && tabData.active && (this.tabPosition === 'top')) {
       tabData.tabPillClass = 'activetab';
     }
