@@ -259,14 +259,14 @@ export class AmexiodialoguePaneComponent implements OnChanges, OnInit {
     this.closeonescape = true;
   }
 
-  @HostListener('window:keyup', ['$event'])
+/*  @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     if (this.closeonescape === true && event.keyCode === KEY_CODE.esc) {
         this.showdialogue = false ;
         this.show = false;
         this.showChange.emit(false);
     }
-  }
+  }*/
 
   ngOnInit() {
 

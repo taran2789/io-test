@@ -118,7 +118,8 @@ description : Position of notification window vertically:
  @ContentChild('amexioNotificationTemp') notificationTemplate: TemplateRef<any>;
 
   // Escape Key Functionality
-  @HostListener('window:keyup', ['$event']) keyEvent(event: KeyboardEvent) {
+ /* @HostListener('window:keyup', ['$event']) keyEvent(event: KeyboardEvent) {
+    console.log(new Date() + '--'+ Math.random());
     if (this.closeonescape === true && event.keyCode === KEY_CODE_notify.esc) {
         const count = this.messageData.length;
         for (let i = 0; i < count; i++) {
@@ -126,7 +127,7 @@ description : Position of notification window vertically:
           this.messageData.splice(msg, 1);
         }
     }
-  }
+  }*/
   constructor(private ref: ChangeDetectorRef) {
   }
   ngOnInit() {
