@@ -21,6 +21,7 @@
 
 
   <span class="drodown-caret-down" (click)="onIconClick()">
+    <amexio-form-icon key="dropdown_caret" *ngIf="!maskloader" ></amexio-form-icon>
     <em class="fa fa-spinner fa-spin" *ngIf="maskloader"></em>
   </span>
 
