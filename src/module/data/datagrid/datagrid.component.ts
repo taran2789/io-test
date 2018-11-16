@@ -383,7 +383,6 @@ import { CommonDataService } from '../../services/data/common.data.service';
       </ng-container>
     </div>
   `,
-  changeDetection:ChangeDetectionStrategy.OnPush,
 })
 
 export class AmexioDatagridComponent implements OnInit, AfterContentInit {
@@ -864,6 +863,8 @@ export class AmexioDatagridComponent implements OnInit, AfterContentInit {
   }
 
   setChangeData(httpResponse: any) {
+    debugger;
+    console.log(httpResponse);
     this.setSelectedFlag(httpResponse);
     if (!this.groupby) {
       this.renderData();

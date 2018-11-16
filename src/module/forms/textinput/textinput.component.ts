@@ -21,7 +21,6 @@ const noop = () => {
     provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AmexioTextInputComponent), multi: true,
   }],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class AmexioTextInputComponent implements ControlValueAccessor, OnInit {
@@ -316,7 +315,6 @@ description : On field value change event
   writeValue(value: any) {
     if (value !== this.innerValue) {
       this.innerValue = value;
-      this._cdr.detectChanges();
     }
   }
 
