@@ -381,7 +381,7 @@ description : If "true" add two context menus i.e close All and close Others tab
           status = true;
         }
       });
-      if(!status) {
+      if(!status && (tabs.closable === true || this.closable === true)) {
         this.closeTab(tabs);
       } else {
         tabList.push(tabs);
