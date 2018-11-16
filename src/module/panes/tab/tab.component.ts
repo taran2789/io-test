@@ -547,7 +547,48 @@ description : If "true" add two context menus i.e close All and close Others tab
     this.shownext = true;
   }
 
+
+
   closeTab(tabNode: AmexioTabPillComponent) {
+    const newTab: any[] = [];
+    const tabs = this.tabs;
+    let index = 0;
+    let tabHighlightIndex = 0;
+
+    this.tabCollection.forEach((tab) => {
+      tab.active = false;
+      if (tab.tabId === tabNode.tabId) {
+        tabHighlightIndex = index;
+        const parentNodeData = document.getElementById(tab.tabId).parentNode;
+        parentNodeData.parentNode.removeChild(parentNodeData);
+        this.tabCollection.splice(index,1);
+      //  tab.destroy();
+      }
+      else if (tab.tabId !== tabNode.tabId) {
+        newTab.push(tab);
+      }
+      index++;
+    });
+
+    if (tabHighlightIndex === newTab.length) {
+      tabHighlightIndex--;
+    }
+    this.tabCollection = newTab;
+    if (tabHighlightIndex > -1) {
+      this.activateTab(newTab[tabHighlightIndex].tabId);
+    } else {
+      this.activateTab(null);
+    }
+    if (this.tabCollection.length === 1) {
+      this.closable = false;
+    }
+ /*   if (newTab.length === 1 ) {
+      newTab[0].closable = false;
+    }*/
+  }
+
+/* NEW METHOD NEED TO CHECK */
+ /* closeTab(tabNode: AmexioTabPillComponent) {
    // const newTab: AmexioTabPillComponent[] = [];
     let tabHighlightIndex = 0;
 
@@ -569,7 +610,7 @@ description : If "true" add two context menus i.e close All and close Others tab
     if (this.tabCollection.length === 1) {
       this.closable = false;
     }
-  }
+  }*/
 
   activateTab(tabId: number) {
     if (tabId !== null) {
@@ -583,7 +624,6 @@ description : If "true" add two context menus i.e close All and close Others tab
   }
 
   asignTabPillClass(tabData: AmexioTabPillComponent) {
-    debugger;
     tabData.tabPillClass = '';
     if ((!tabData.amexiocolor || tabData.amexiocolor === '') && tabData.active && (this.tabPosition === 'top')) {
       tabData.tabPillClass = 'activetab';
