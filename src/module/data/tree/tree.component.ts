@@ -16,7 +16,6 @@ import { CommonDataService } from '../../services/data/common.data.service';
 @Component({
   selector: 'amexio-treeview',
   templateUrl: './tree.component.html',
-  changeDetection:ChangeDetectionStrategy.OnPush,
 })
 export class AmexioTreeViewComponent implements AfterViewInit, OnInit {
   private componentLoaded: boolean;
