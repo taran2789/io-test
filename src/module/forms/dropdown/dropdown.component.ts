@@ -442,7 +442,7 @@ export class AmexioDropDownComponent  extends  ListBaseComponent<string> impleme
     } else {
       this.value = selectedItem[this.valuefield];  // Issue here?
       this.displayValue = selectedItem[this.displayfield];
-      this.itemClicked();
+      //  this.itemClicked();
       this.multiselect ? this.showToolTip = true : this.showToolTip = false;
       this.onSingleSelect.emit(selectedItem);
     }
@@ -482,7 +482,6 @@ export class AmexioDropDownComponent  extends  ListBaseComponent<string> impleme
       }
     }
   }
-
   setMultiSelect() {
     this.setMultiSelectData();
     let multiselectDisplayString: any = '';
@@ -582,13 +581,13 @@ export class AmexioDropDownComponent  extends  ListBaseComponent<string> impleme
       }
     }
   }
-
   // get accessor
   get value(): any {
     return this.innerValue;
   }
   // set accessor including call the onchange callback
   set value(v: any) {
+
     if (v != null && v !== this.innerValue) {
       this.innerValue = v;
       this.onChangeCallback(v);
@@ -606,7 +605,7 @@ export class AmexioDropDownComponent  extends  ListBaseComponent<string> impleme
       }
     }
     this.onTouchedCallback();
-    this.baseBlur(event);
+     this.baseBlur(event);
     this.onBlur.emit();
   }
   onFocus(elem: any) {
@@ -636,13 +635,19 @@ export class AmexioDropDownComponent  extends  ListBaseComponent<string> impleme
   }
   writeChangedValue(value: any) {
     if (value !== this.innerValue) {
+      let status = false;
       if (this.viewData && this.viewData.length > 0) {
         this.viewData.forEach((item: any) => {
           if (item[this.valuefield] === value) {
             this.isValid = true;
             this.displayValue = item[this.displayfield];
+            status = true;
+            return;
           }
         });
+      }
+      if (!status) {
+        this.displayValue = '';
       }
       this.value = value;
     }
