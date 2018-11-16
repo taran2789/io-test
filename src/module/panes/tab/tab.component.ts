@@ -373,13 +373,23 @@ description : If "true" add two context menus i.e close All and close Others tab
 
   // Method to close particular tabs
   closeTabs(data: any) {
+    let tabList: any[] = [];
     this.tabCollection.forEach((tabs) => {
+      let status =  false;
       data.forEach((opt: any) => {
-        if (opt.toLowerCase() !== tabs.title.toLowerCase() && (tabs.closable === true || this.closable === true)) {
-          this.closeTab(tabs);
+        if (opt.toLowerCase() == tabs.title.toLowerCase() && (tabs.closable === true || this.closable === true)) {
+          status = true;
         }
       });
+      if(!status) {
+        this.closeTab(tabs);
+      } else {
+        tabList.push(tabs);
+      }
     });
+    tabList[0].active = true;
+    this.asignTabPillClass(tabList[0]);
+
   }
 
   // Method to set active tab on the basis of tab sequence or tab title
