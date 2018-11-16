@@ -14,12 +14,13 @@
  for enabling filter, multi-select, maximum selection in case of multi select.
  */
 import {
-  Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit,
-  Output, TemplateRef, ViewChild,
+  ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit, Output,
+  Renderer2, TemplateRef, ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import {CommonDataService} from "../../services/data/common.data.service";
+import {ListBaseComponent} from "../base/base.component";
 
 const noop = () => {
 };
@@ -31,7 +32,7 @@ const noop = () => {
     provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AmexioDropDownComponent), multi: true,
   }]
 })
-export class AmexioDropDownComponent implements OnInit, ControlValueAccessor {
+export class AmexioDropDownComponent  extends  ListBaseComponent<string> implements OnInit, ControlValueAccessor {
   /*
    Properties
    name : field-label
@@ -332,7 +333,8 @@ export class AmexioDropDownComponent implements OnInit, ControlValueAccessor {
    this.showToolTip = false;
    }
    }*/
-  constructor(public dataService: CommonDataService, public _http: HttpClient) {
+  constructor(public dataService: CommonDataService, public _http: HttpClient, public renderer : Renderer2, public element: ElementRef,public cd: ChangeDetectorRef) {
+    super(renderer,element,cd);
   }
   ngOnInit() {
     this.isValid = this.allowblank;
@@ -440,6 +442,7 @@ export class AmexioDropDownComponent implements OnInit, ControlValueAccessor {
     } else {
       this.value = selectedItem[this.valuefield];  // Issue here?
       this.displayValue = selectedItem[this.displayfield];
+      this.itemClicked();
       this.multiselect ? this.showToolTip = true : this.showToolTip = false;
       this.onSingleSelect.emit(selectedItem);
     }
@@ -603,9 +606,11 @@ export class AmexioDropDownComponent implements OnInit, ControlValueAccessor {
       }
     }
     this.onTouchedCallback();
+    this.baseBlur(event);
     this.onBlur.emit();
   }
   onFocus(elem: any) {
+    this.baseFocus(elem);
     this.showToolTip = true;
     this.posixUp = this.getListPosition(elem);
     this.focus.emit();
@@ -653,6 +658,7 @@ export class AmexioDropDownComponent implements OnInit, ControlValueAccessor {
   }
   onIconClick() {
     if (!this.disabled) {
+      this.baseFocus({});
       this.showToolTip = !this.showToolTip;
     }
   }

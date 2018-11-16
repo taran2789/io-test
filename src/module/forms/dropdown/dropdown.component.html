@@ -25,10 +25,10 @@
     <em class="fa fa-spinner fa-spin" *ngIf="maskloader"></em>
   </span>
 
-  <span #dropdownitems class="dropdown" [ngClass]="{'dropdown-up' : posixUp}" [ngStyle]="{'display': showToolTip ? 'block' : 'none'}">
+  <span #dropdownitems class="dropdown" [ngClass]="{'dropdown-up' : posixUp}" [ngStyle]="dropdownstyle">
         <ul class="dropdown-list">
 
-          <li class="list-items" [ngClass]="{'list-items-selected':item.selected}" *ngFor="let item of filteredOptions" (click)="onItemSelect(item)">
+          <li class="list-items" [ngClass]="{'list-items-selected':item.selected}" *ngFor="let item of filteredOptions" (mousedown)="onItemSelect(item)">
             <ng-container *ngIf="bodyTemplate">
               <ng-template [ngTemplateOutlet]="bodyTemplate" [ngTemplateOutletContext]="{ $implicit: { text : row }, row: item }">
                 </ng-template>
