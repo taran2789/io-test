@@ -230,15 +230,10 @@ description : Name of key inside response data to display on ui.
   }
 
   emitSelectedRows() {
-    const sRows = [];
     const cloneSelectedChecks = JSON.parse(JSON.stringify(this.selectedCheckBox));
-    for (const sr of cloneSelectedChecks) {
-      if (cloneSelectedChecks[sr]) {
-        // remove id from selected value
-        delete cloneSelectedChecks[sr].id;
-        sRows.push(cloneSelectedChecks[sr]);
-      }
-    }
+    cloneSelectedChecks.forEach((opt: any) => {
+      delete opt['id'];
+    });
     if (this.selectedCheckBox.length > 0 && this.required) {
       let isValid = false;
       this.selectedCheckBox.forEach((c) => {
@@ -249,7 +244,7 @@ description : Name of key inside response data to display on ui.
       this.isValid = isValid;
       this.isComponentValid.emit(isValid);
     }
-    this.onSelection.emit(sRows);
+    this.onSelection.emit(cloneSelectedChecks);
   }
 
   // THIS MEHTOD CHECK INPUT IS VALID OR NOT
