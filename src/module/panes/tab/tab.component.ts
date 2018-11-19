@@ -641,6 +641,7 @@ description : If "true" add two context menus i.e close All and close Others tab
         if (tab.tabId === tabId) {
           tab.active = true;
         }
+        this.asignTabPillClass(tab);
       });
     }
   }
