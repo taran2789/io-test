@@ -638,7 +638,7 @@ export class AmexioDropDownComponent  extends  ListBaseComponent<string> impleme
       let status = false;
       if (this.viewData && this.viewData.length > 0) {
         this.viewData.forEach((item: any) => {
-          if (item[this.valuefield] === value) {
+          if (item[this.valuefield] == value) {
             this.isValid = true;
             this.displayValue = item[this.displayfield];
             status = true;
