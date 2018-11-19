@@ -245,6 +245,8 @@ description : If "true" add two context menus i.e close All and close Others tab
 
   tabPositionClass: string = '';
 
+  componentId = '';
+
   map = new Map<any, any>();
   constructor(public render: Renderer2, private componentFactoryResolver: ComponentFactoryResolver, viewContainerRef: ViewContainerRef) {
     this.headeralign = 'left';
@@ -255,6 +257,7 @@ description : If "true" add two context menus i.e close All and close Others tab
   }
   ngOnInit() {
     this.componentLoaded = true;
+    this.componentId = Math.floor(Math.random() * 90000) + 10000 + '_tabc';
   }
 
   updateTabComponent() {
@@ -564,34 +567,43 @@ description : If "true" add two context menus i.e close All and close Others tab
     const tabs = this.tabs;
     let index = 0;
     let tabHighlightIndex = 0;
-
-    this.tabCollection.forEach((tab) => {
+    let activeTabCount = 0;
+    debugger;
+    this.tabCollection.forEach((tab: any, i: number) => {
       tab.active = false;
       if (tab.tabId === tabNode.tabId) {
         tabHighlightIndex = index;
-        const parentNodeData = document.getElementById(tab.tabId).parentNode;
-        parentNodeData.parentNode.removeChild(parentNodeData);
-        this.tabCollection.splice(index,1);
+
+     /*   let tabList = document.getElementById(this.componentId);
+        tabList.removeChild(tabList.childNodes[i+1]);*/
+
+
+     /*   const removeNode = document.getElementById(tab.tabId).parentNode;
+        const parentRefNode = removeNode.parentNode;
+        parentRefNode.removeChild(removeNode);*/
+        activeTabCount = i;
+        this.tabCollection.splice(i,1);
       //  tab.destroy();
-      }
-      else if (tab.tabId !== tabNode.tabId) {
-        newTab.push(tab);
       }
       index++;
     });
 
-    if (tabHighlightIndex === newTab.length) {
+    if (tabHighlightIndex === this.tabCollection.length) {
       tabHighlightIndex--;
     }
-    this.tabCollection = newTab;
-    if (tabHighlightIndex > -1) {
-      this.activateTab(newTab[tabHighlightIndex].tabId);
+   // this.tabCollection = newTab;
+    if (this.tabCollection.length != 0 && this.tabCollection.length !== 1 ) {
+      if(this.tabCollection.length === activeTabCount) {
+        this.activateTab(this.tabCollection[activeTabCount-1].tabId);
+      } else {
+        this.activateTab(this.tabCollection[activeTabCount].tabId);
+      }
+    } else if (this.tabCollection.length === 1) {
+      this.closable = false;
     } else {
       this.activateTab(null);
     }
-    if (this.tabCollection.length === 1) {
-      this.closable = false;
-    }
+
  /*   if (newTab.length === 1 ) {
       newTab[0].closable = false;
     }*/
