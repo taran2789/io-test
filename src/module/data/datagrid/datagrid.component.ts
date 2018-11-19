@@ -863,7 +863,6 @@ export class AmexioDatagridComponent implements OnInit, AfterContentInit {
   }
 
   setChangeData(httpResponse: any) {
-    debugger;
     console.log(httpResponse);
     this.setSelectedFlag(httpResponse);
     if (!this.groupby) {
