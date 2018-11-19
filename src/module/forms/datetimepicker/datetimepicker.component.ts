@@ -259,6 +259,7 @@ export class AmexioDateTimePickerComponent implements OnInit {
     this.daysTitle.push({ text: 'Su' });
   }
   private createDaysForCurrentMonths(selectedPeriod: any) {
+    debugger;
     this.daysArray = [];
     const date = new Date(selectedPeriod.getFullYear(), selectedPeriod.getMonth(), 1, 0, 0, 0, 0); // Starting at the 1st of the month
     const extras = (date.getDay() + 6) % 7; // How many days of the last month do we need to include?
@@ -503,9 +504,13 @@ export class AmexioDateTimePickerComponent implements OnInit {
   }
   // From ControlValueAccessor interface
   writeValue(value: any) {
+    debugger;
     if (value !== this.innerValue) {
       this.innerValue = value;
       if (this.innerValue instanceof Date || ('number' === typeof this.innerValue)) {
+        if(('number' === typeof this.innerValue)) {
+          this.innerValue  = new Date(value);
+        }
         this.dateModel = this.innerValue;
         this.currrentDate = this.dateModel;
         this.selectedDate = this.currrentDate;
