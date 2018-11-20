@@ -425,13 +425,16 @@ description : Context Menu provides the list of menus on right click.
   }
 
   getDropNode(dragData: any, node: any, event: any) {
-    dragData.data[this.childarraykey].forEach((child: any) => {
-      if (JSON.stringify(child) === JSON.stringify(node) || node.leaf === true) {
-        event.dataTransfer.dropEffect = 'none';
-      } else if (child.hasOwnProperty(this.childarraykey)) {
-        this.getDropNode(child[this.childarraykey], node, event);
-      }
-    });
+    if(dragData.data[this.childarraykey] != null && dragData.data[this.childarraykey].length > 0) {
+      dragData.data[this.childarraykey].forEach((child: any) => {
+        if (JSON.stringify(child) === JSON.stringify(node) || node.leaf === true) {
+          event.dataTransfer.dropEffect = 'none';
+        } else if (child.hasOwnProperty(this.childarraykey)) {
+          this.getDropNode(child[this.childarraykey], node, event);
+        }
+      });
+    }
+
   }
 
   drop(dropData: any) {
