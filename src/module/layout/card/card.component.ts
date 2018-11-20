@@ -172,7 +172,9 @@ description : Context Menu provides the list of menus on right click.
   }
   ngAfterViewInit() {
     this.getContextMenu();
-    this.onResize();
+    setTimeout(() => {
+      this.onResize();
+    }, 500);
   }
   ngAfterContentInit() {
     // FOR HEADER PADING
