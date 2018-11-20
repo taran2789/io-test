@@ -375,24 +375,45 @@ description : If "true" add two context menus i.e close All and close Others tab
   }
 
   // Method to close particular tabs
-  closeTabs(data: any) {
+  /*closeTabs(data: any) {
+    debugger;
     let tabList: any[] = [];
     this.tabCollection.forEach((tabs) => {
-      let status =  false;
+      tabs.active = false;
+      data.forEach((opt: any) => {
+        if (opt.toLowerCase() !== tabs.title.toLowerCase() && (tabs.closable === true || this.closable === true)) {
+          this.closeTab(tabs);
+        } else {
+          tabList.push(tabs);
+        }
+        this.asignTabPillClass(tabs);
+      });
+    });
+
+
+    tabList.forEach((tabs) => {
       data.forEach((opt: any) => {
         if (opt.toLowerCase() == tabs.title.toLowerCase() && (tabs.closable === true || this.closable === true)) {
-          status = true;
+          tabs = true;
+          this.asignTabPillClass(tabs);
+          return;
+
         }
       });
-      if(!status && (tabs.closable === true || this.closable === true)) {
-        this.closeTab(tabs);
-      } else {
-        tabList.push(tabs);
-      }
     });
-    tabList[0].active = true;
-    this.asignTabPillClass(tabList[0]);
+  }*/
 
+
+  closeTabs(data: any) {
+    this.tabCollection.forEach((tabs) => {
+      tabs.active= false;
+      data.forEach((opt: any) => {
+        if (opt.toLowerCase() !== tabs.title.toLowerCase() && (tabs.closable === true || this.closable === true)) {
+          this.closeTab(tabs);
+        }
+      });
+    });
+    debugger;
   }
 
   // Method to set active tab on the basis of tab sequence or tab title
@@ -494,7 +515,7 @@ description : If "true" add two context menus i.e close All and close Others tab
       tab1.active = false;
       });
     tab.active = true;
-    this.asignTabPillClass(tab);
+   // this.asignTabPillClass(tab);
     this.tabCollection.forEach((tab1: any) => {
       this.asignTabPillClass(tab1);
     });
@@ -562,7 +583,7 @@ description : If "true" add two context menus i.e close All and close Others tab
 
 
 
-  closeTab(tabNode: AmexioTabPillComponent) {
+ /* closeTab(tabNode: AmexioTabPillComponent) {
     const newTab: any[] = [];
     const tabs = this.tabs;
     let index = 0;
@@ -574,13 +595,11 @@ description : If "true" add two context menus i.e close All and close Others tab
       if (tab.tabId === tabNode.tabId) {
         tabHighlightIndex = index;
 
-     /*   let tabList = document.getElementById(this.componentId);
-        tabList.removeChild(tabList.childNodes[i+1]);*/
-
-
-     /*   const removeNode = document.getElementById(tab.tabId).parentNode;
+        let tabList = document.getElementById(this.componentId);
+        tabList.removeChild(tabList.childNodes[i]);
+     /!*   const removeNode = document.getElementById(tab.tabId).parentNode;
         const parentRefNode = removeNode.parentNode;
-        parentRefNode.removeChild(removeNode);*/
+        parentRefNode.removeChild(removeNode);*!/
         activeTabCount = i;
         this.tabCollection.splice(i,1);
       //  tab.destroy();
@@ -604,35 +623,49 @@ description : If "true" add two context menus i.e close All and close Others tab
       this.activateTab(null);
     }
 
- /*   if (newTab.length === 1 ) {
+ /!*   if (newTab.length === 1 ) {
       newTab[0].closable = false;
-    }*/
-  }
+    }*!/
+  }*/
 
-/* NEW METHOD NEED TO CHECK */
- /* closeTab(tabNode: AmexioTabPillComponent) {
-   // const newTab: AmexioTabPillComponent[] = [];
+
+
+  closeTab(tabNode: AmexioTabPillComponent) {
+    const newTab: AmexioTabPillComponent[] = [];
+    let index = 0;
     let tabHighlightIndex = 0;
 
-    this.tabCollection.forEach((tab:AmexioTabPillComponent, index: number) => {
+    this.tabCollection.forEach((tab) => {
+      tab.active = false;
       if (tab.tabId === tabNode.tabId) {
         tabHighlightIndex = index;
-        const parentNodeData = document.getElementById(tab.tabId).parentNode;
-        parentNodeData.parentNode.removeChild(parentNodeData);
-        this.tabCollection.splice(index,1);
+      /*  let parentNodeData: any;
+        parentNodeData = document.getElementById(tab.tabId).parentNode;
+        parentNodeData.parentNode.removeChild(parentNodeData);*/
+      } else if (tab.tabId !== tabNode.tabId) {
+        newTab.push(tab);
       }
+      index++;
     });
 
-    if (tabHighlightIndex === this.tabCollection.length) {
+    if (tabHighlightIndex === newTab.length) {
       tabHighlightIndex--;
     }
+    this.tabCollection = newTab;
     if (tabHighlightIndex > -1) {
-      this.setActiveTab(tabHighlightIndex);
+      this.activateTab(newTab[tabHighlightIndex].tabId);
+    } else {
+      this.activateTab(null);
     }
     if (this.tabCollection.length === 1) {
       this.closable = false;
     }
-  }*/
+    if (newTab.length === 1) {
+      newTab[0].closable = false;
+    }
+  }
+
+
 
   activateTab(tabId: number) {
     if (tabId !== null) {
