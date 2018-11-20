@@ -330,7 +330,6 @@ description : Context Menu provides the list of menus on right click.
 
   }
   setClass() {
-    console.log('setClass');
     if (this.isFullWindow) {
       this.styleClass = 'modal-window-content-max';
     } else {

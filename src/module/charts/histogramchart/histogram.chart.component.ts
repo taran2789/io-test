@@ -302,7 +302,7 @@ description : sets background color
   ngOnInit(): void {
     this.hasLoaded = false;
     this.loader.loadCharts('Histogram').subscribe(
-      (value) => console.log(),
+      (value) => {},
       (errror) => console.error(errror),
       () => {
         this.drawChart();
