@@ -36,7 +36,7 @@ export class ChartLoaderService {
         return new Observable(
             (observer) => {
                 this.loadScript().subscribe(
-                    (val) => console.log(),
+                    (val) =>{},
                     (error) => console.error(error),
                     () => {
                         this.loadRequiredChart(observer, chartName);

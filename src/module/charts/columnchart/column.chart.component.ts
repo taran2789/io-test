@@ -337,7 +337,7 @@ description : sets background color
 
   ngOnInit(): void {
     this.hasLoaded = false;
-    this.loader.loadCharts('ColumnChart').subscribe((value) => console.log(), (errror) => console.error(errror), () => {
+    this.loader.loadCharts('ColumnChart').subscribe((value) => {}, (errror) => console.error(errror), () => {
       this.drawChart();
     });
   }

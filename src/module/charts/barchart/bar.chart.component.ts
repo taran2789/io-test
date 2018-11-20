@@ -333,7 +333,7 @@ return{
 
   ngOnInit(): void {
     this.hasLoaded = false;
-    this.loader.loadCharts('BarChart').subscribe((value) => console.log(), (errror) => console.error(errror), () => {
+    this.loader.loadCharts('BarChart').subscribe((value) => {}, (errror) => console.error(errror), () => {
       this.drawChart();
     });
   }

@@ -326,7 +326,7 @@ createTable(array: any[]): any {
 
   ngOnInit(): void {
     this.hasLoaded = false;
-    this.loader.loadCharts('LineChart').subscribe((value) => console.log(), (error) => console.error(error), () => {
+    this.loader.loadCharts('LineChart').subscribe((value) => {}, (error) => console.error(error), () => {
       this.drawChart();
     });
   }

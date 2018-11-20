@@ -318,7 +318,7 @@ click(e: any) {
 
   ngOnInit(): void {
     this.hasLoaded = false;
-    this.loader.loadCharts('CandlestickChart').subscribe((value) => console.log(), (errror) => console.error(errror), () => {
+    this.loader.loadCharts('CandlestickChart').subscribe((value) => {}, (errror) => console.error(errror), () => {
       this.drawChart();
     });
   }

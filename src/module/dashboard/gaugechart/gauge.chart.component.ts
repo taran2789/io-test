@@ -289,7 +289,7 @@ description : The number of minor tick section in each major tick section.
   }
   ngOnInit(): void {
     this.hasLoaded = false;
-    this.loader.loadCharts('Gauge').subscribe((value: any) => console.log(), (errror: any) => console.error(errror), () => {
+    this.loader.loadCharts('Gauge').subscribe((value: any) => {}, (errror: any) => console.error(errror), () => {
       this.drawChart();
     });
   }

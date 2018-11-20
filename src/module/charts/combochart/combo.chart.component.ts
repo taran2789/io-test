@@ -341,7 +341,7 @@ description : sets background color to chart
 
   ngOnInit(): void {
     this.hasLoaded = false;
-    this.loader.loadCharts('ComboChart').subscribe((value) => console.log(), (errror) => console.error(errror), () => {
+    this.loader.loadCharts('ComboChart').subscribe((value) => {}, (errror) => console.error(errror), () => {
       this.drawChart();
     });
   }

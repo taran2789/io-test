@@ -317,7 +317,7 @@ description : sets the pie hole size
   ngOnInit(): void {
     this.hasLoaded = false;
     this.loader.loadCharts('PieChart').subscribe(
-      (value) => console.log(),
+      (value) => {},
       (error) => console.error(error),
       () => {
         this.drawChart();

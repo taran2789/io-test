@@ -306,7 +306,7 @@ export class DonutChartComponent implements AfterContentInit, OnInit {
 
   ngOnInit() {
     this.hasLoaded = false;
-    this.loader.loadCharts('PieChart').subscribe((value) => console.log(), (errror) => console.error(errror), () => {
+    this.loader.loadCharts('PieChart').subscribe((value) => {}, (errror) => console.error(errror), () => {
       this.drawChart();
     });
   }

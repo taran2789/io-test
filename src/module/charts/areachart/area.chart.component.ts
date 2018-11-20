@@ -305,7 +305,7 @@ description : Sets background color to chart
 
   ngOnInit(): void {
     this.hasLoaded = false;
-    this.loader.loadCharts('AreaChart').subscribe((value) => console.log(), (errror) => console.error(errror), () => {
+    this.loader.loadCharts('AreaChart').subscribe((value) => {}, (errror) => console.error(errror), () => {
       this.drawChart();
     });
   }

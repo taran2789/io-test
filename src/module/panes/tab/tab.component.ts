@@ -375,14 +375,22 @@ export class AmexioTabComponent implements AfterContentInit, AfterViewInit, OnIn
   }
 
   closeTabs(data: any) {
+    let tabList:any[] = [];
     this.tabCollection.forEach((tabs) => {
       tabs.active= false;
       data.forEach((opt: any) => {
         if (opt.toLowerCase() !== tabs.title.toLowerCase() && (tabs.closable === true || this.closable === true)) {
           this.closeTab(tabs);
+        } else {
+          tabList.push(tabs);
+          this.asignTabPillClass(tabs);
         }
       });
+
     });
+    tabList[tabList.length-1].active = true;
+    this.asignTabPillClass(tabList[tabList.length-1]);
+
   }
 
   // Method to set active tab on the basis of tab sequence or tab title

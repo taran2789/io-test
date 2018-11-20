@@ -290,7 +290,7 @@ export class TreeMapComponent implements AfterContentInit, OnInit {
 
   ngOnInit(): void {
     this.hasLoaded = false;
-    this.loader.loadCharts('TreeMap').subscribe((value) => console.log(), (errror) => console.error(errror), () => {
+    this.loader.loadCharts('TreeMap').subscribe((value) => {}, (errror) => console.error(errror), () => {
       this.drawChart();
     });
   }
