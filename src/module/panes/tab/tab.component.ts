@@ -361,7 +361,7 @@ export class AmexioTabComponent implements AfterContentInit, AfterViewInit, OnIn
     this.dummyArray.push(tp);
     this.tabCollection.push(tp.instance);
     this.selectTab(tp.instance);
-
+    this.adjustWidth();
     return dynCmp.instance;
   }
 
@@ -568,7 +568,7 @@ export class AmexioTabComponent implements AfterContentInit, AfterViewInit, OnIn
       if (tab.tabId === tabNode.tabId) {
         tabHighlightIndex = index;
         if(tab.hasOwnProperty('tabpillinstance')) {
-          tab.tabpillinstance.remove();
+          tab.target.remove();
         } else {
           const removeNode = document.getElementById(tab.tabId).parentNode;
           const parentRefNode = removeNode.parentNode;
