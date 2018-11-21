@@ -24,14 +24,14 @@ before_script:
   - npm install --save del 
   - npm install --global gulp --save
   - gem install sass
-  - git fetch --unshallow
-
-            
+           
 script: 
   - gulp test
   - gulp build
   - cd dist && npm pack
   - mv amexio-ng-extensions-*.tgz amexio-ng-extensions.tgz
+ 
+after_success: 
   - cd ../
   - git clone https://github.com/meta-magic/canvas-amexio-io-tar.git 
   - cd canvas-amexio-io-tar
@@ -39,7 +39,6 @@ script:
   - git add amexio-ng-extensions.tgz 
   - git commit -m "date"
   - git push --force --quiet "https://deepali-arvind:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" HEAD:master 
-after_success: 
   - gulp coveralls
   - codecov
 
