@@ -17,7 +17,7 @@ version : 4.2 onwards
 default : left
 description : padding for footer.
 */
-  @Input() padding: string;
+  @Input() padding: string; 
 
   constructor() {
   }
