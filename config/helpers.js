@@ -6,7 +6,7 @@ const _root = path.resolve(__dirname, '..');
 
 
 /**
- * Plaform independant path to an executable cmd
+ * Plaform independant path to an executable command
  * @param {string} path
  */
 platformPath = (path) => {
